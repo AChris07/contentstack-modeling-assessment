@@ -39,3 +39,31 @@ export const headerQuery = gql`
     }
   }
 `;
+
+export const landingPageQuery = gql`
+  query LandingPageQuery {
+    all_landing_page(limit: 1) {
+      items {
+        hero_banner {
+          eyebrow
+          title {
+            json
+          }
+          description
+          imageConnection {
+            edges {
+              node {
+                url
+                description
+                dimension {
+                  width
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
