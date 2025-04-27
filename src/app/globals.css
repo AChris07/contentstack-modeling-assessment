@@ -14,5 +14,6 @@
 }
 
 body {
+  background-color: var(--color-neutral-100);
   font-family: var(--font-poppins), sans-serif;
 }

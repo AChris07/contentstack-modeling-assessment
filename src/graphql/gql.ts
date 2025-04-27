@@ -63,6 +63,30 @@ export const landingPageQuery = gql`
             }
           }
         }
+        topics_carousel {
+          title
+          topicsConnection {
+            edges {
+              node {
+                ... on BlogTopic {
+                  title
+                  iconConnection {
+                    edges {
+                      node {
+                        url
+                        dimension {
+                          width
+                          height
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          cta_label
+        }
       }
     }
   }
