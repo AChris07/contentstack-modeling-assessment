@@ -40,6 +40,59 @@ export const headerQuery = gql`
   }
 `;
 
+export const pageSettingsQuery = gql`
+  query PageSettingsQuery {
+    all_page_settings(limit: 1) {
+      items {
+        your_host {
+          title
+          authorConnection {
+            edges {
+              node {
+                ... on Author {
+                  title
+                  profile_imageConnection {
+                    edges {
+                      node {
+                        url
+                        dimension {
+                          height
+                          width
+                        }
+                      }
+                    }
+                  }
+                  biography {
+                    json
+                  }
+                  social_links {
+                    iconConnection {
+                      edges {
+                        node {
+                          url
+                          dimension {
+                            height
+                            width
+                          }
+                        }
+                      }
+                    }
+                    link
+                  }
+                }
+              }
+            }
+          }
+          call_to_action {
+            title
+            href
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const landingPageQuery = gql`
   query LandingPageQuery {
     all_landing_page(limit: 1) {

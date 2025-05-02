@@ -57,7 +57,7 @@ export function TopicsCarousel({ data }: TopicsCarouselProps) {
   }
 
   return (
-    <div className="mb-4 lg:mb-9">
+    <div className="mb-4 lg:mb-9 border-b-1 border-secondary-color">
       <TopicsCarouselClient title={data?.title ?? ""}>
         {topics.map((topic, index) => (
           <div
