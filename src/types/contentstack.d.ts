@@ -260,6 +260,7 @@ type BlogPost = {
   authorConnection?: Maybe<BlogPostAuthorConnection>;
   categoryConnection?: Maybe<BlogPostCategoryConnection>;
   content?: Maybe<BlogPostContent>;
+  imageConnection?: Maybe<SysAssetConnection>;
   published_date?: Maybe<Scalars['DateTime']['output']>;
   summary?: Maybe<Scalars['String']['output']>;
   system?: Maybe<EntrySystemField>;
@@ -358,6 +359,8 @@ type BlogPostWhere = {
   created_by_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   created_by_ne?: InputMaybe<Scalars['String']['input']>;
   created_by_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  image?: InputMaybe<SysAssetWhere>;
+  image_exists?: InputMaybe<Scalars['Boolean']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
   locale_exists?: InputMaybe<Scalars['Boolean']['input']>;
   locale_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -878,11 +881,30 @@ type HeroBannerWhere = {
 
 type LandingPage = {
   __typename?: 'LandingPage';
+  featured_postConnection?: Maybe<LandingPageFeaturedPostConnection>;
   hero_banner?: Maybe<HeroBanner>;
   seo?: Maybe<Seo>;
   system?: Maybe<EntrySystemField>;
   title?: Maybe<Scalars['String']['output']>;
   topics_carousel?: Maybe<LandingPageTopicsCarousel>;
+};
+
+type LandingPageFeaturedPostConnection = {
+  __typename?: 'LandingPageFeaturedPostConnection';
+  edges?: Maybe<Array<Maybe<LandingPageFeaturedPostEdge>>>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+type LandingPageFeaturedPostEdge = {
+  __typename?: 'LandingPageFeaturedPostEdge';
+  node?: Maybe<LandingPageFeaturedPostNode>;
+};
+
+type LandingPageFeaturedPostNode = BlogPost;
+
+type LandingPageFeaturedPostWhere = {
+  MATCH?: InputMaybe<EvalReferenceEnum>;
+  blog_post?: InputMaybe<BlogPostWhere>;
 };
 
 enum LandingPageOrderBy {
@@ -903,6 +925,7 @@ type LandingPageTopicsCarousel = {
 type LandingPageTopicsCarouselTopicsConnectionArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SysRefLandingPageTopicsCarouselTopicsWhere>;
 };
 
 type LandingPageTopicsCarouselTopicsConnection = {
@@ -954,6 +977,8 @@ type LandingPageWhere = {
   created_by_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   created_by_ne?: InputMaybe<Scalars['String']['input']>;
   created_by_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  featured_post?: InputMaybe<LandingPageFeaturedPostWhere>;
+  featured_post_exists?: InputMaybe<Scalars['Boolean']['input']>;
   hero_banner?: InputMaybe<HeroBannerWhere>;
   hero_banner_exists?: InputMaybe<Scalars['Boolean']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
@@ -1055,6 +1080,7 @@ type PageSettingsCategoryList = {
 type PageSettingsCategoryListCategoriesConnectionArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SysRefPageSettingsCategoryListCategoriesWhere>;
 };
 
 type PageSettingsCategoryListCategoriesConnection = {
@@ -1140,6 +1166,7 @@ type PageSettingsTopRated = {
 type PageSettingsTopRatedPostsConnectionArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SysRefPageSettingsTopRatedPostsWhere>;
 };
 
 type PageSettingsTopRatedPostsConnection = {
@@ -1793,6 +1820,83 @@ type SysMetadata = {
   metadata?: Maybe<Array<Maybe<Scalars['JSON']['output']>>>;
 };
 
+type SysRefBlogCategoryWhere = {
+  hero_banner?: InputMaybe<SysRefHeroBannerWhere>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  title_ne?: InputMaybe<Scalars['String']['input']>;
+  title_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  url?: InputMaybe<Scalars['String']['input']>;
+  url_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  url_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  url_ne?: InputMaybe<Scalars['String']['input']>;
+  url_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+type SysRefBlogPostWhere = {
+  published_date?: InputMaybe<Scalars['DateTime']['input']>;
+  published_date_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  published_date_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  published_date_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  published_date_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  published_date_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  published_date_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  published_date_ne?: InputMaybe<Scalars['DateTime']['input']>;
+  published_date_nin?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  summary_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  summary_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  summary_ne?: InputMaybe<Scalars['String']['input']>;
+  summary_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  title_ne?: InputMaybe<Scalars['String']['input']>;
+  title_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  trending?: InputMaybe<Scalars['Boolean']['input']>;
+  trending_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  trending_ne?: InputMaybe<Scalars['Boolean']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+  url_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  url_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  url_ne?: InputMaybe<Scalars['String']['input']>;
+  url_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+type SysRefBlogTopicWhere = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  title_ne?: InputMaybe<Scalars['String']['input']>;
+  title_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+type SysRefHeroBannerWhere = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  description_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  description_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  description_ne?: InputMaybe<Scalars['String']['input']>;
+  description_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_exists?: InputMaybe<Scalars['Boolean']['input']>;
+  eyebrow_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  eyebrow_ne?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+type SysRefLandingPageTopicsCarouselTopicsWhere = {
+  blog_topic?: InputMaybe<SysRefBlogTopicWhere>;
+};
+
+type SysRefPageSettingsCategoryListCategoriesWhere = {
+  blog_category?: InputMaybe<SysRefBlogCategoryWhere>;
+};
+
+type SysRefPageSettingsTopRatedPostsWhere = {
+  blog_post?: InputMaybe<SysRefBlogPostWhere>;
+};
+
 type SysVariants = {
   __typename?: 'SysVariants';
   alias?: Maybe<Scalars['String']['output']>;
@@ -1834,4 +1938,14 @@ type SystemPublishDetailsWhere = {
 type HeaderQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type HeaderQueryQuery = { __typename?: 'Query', all_header?: { __typename?: 'AllHeader', items?: Array<{ __typename?: 'Header', logo?: { __typename?: 'Logo', logo_link?: string | null, logo_imageConnection?: { __typename?: 'SysAssetConnection', edges?: Array<{ __typename?: 'SysAssetEdge', node?: { __typename?: 'SysAsset', url?: string | null, description?: string | null, dimension?: { __typename?: 'SysAssetDimension', width?: number | null, height?: number | null } | null } | null } | null> | null } | null } | null, navigation_list?: Array<{ __typename?: 'HeaderNavigationList', navigation_itemConnection?: { __typename?: 'HeaderNavigationListNavigationItemConnection', edges?: Array<{ __typename?: 'HeaderNavigationListNavigationItemEdge', node?: { __typename?: 'BlogCategory', title?: string | null, url?: string | null } | null } | null> | null } | null } | null> | null } | null> | null } | null };
+type HeaderQueryQuery = { __typename?: 'Query', all_header?: { __typename?: 'AllHeader', items?: Array<{ __typename?: 'Header', logo?: { __typename?: 'Logo', logo_link?: string | null, logo_imageConnection?: { __typename?: 'SysAssetConnection', edges?: Array<{ __typename?: 'SysAssetEdge', node?: { __typename?: 'SysAsset', url?: string | null, description?: string | null, dimension?: { __typename?: 'SysAssetDimension', width?: number | null, height?: number | null } | null } | null } | null> | null } | null } | null, navigation_list?: Array<{ __typename?: 'HeaderNavigationList', navigation_itemConnection?: { __typename?: 'HeaderNavigationListNavigationItemConnection', edges?: Array<{ __typename?: 'HeaderNavigationListNavigationItemEdge', node?: { __typename?: 'BlogCategory', title?: string | null, url?: string | null } | null } | null> | null } | null } | null> | null, call_to_action?: { __typename?: 'Link', title?: string | null, href?: string | null } | null } | null> | null } | null };
+
+type PageSettingsQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type PageSettingsQueryQuery = { __typename?: 'Query', all_page_settings?: { __typename?: 'AllPageSettings', items?: Array<{ __typename?: 'PageSettings', your_host?: { __typename?: 'PageSettingsYourHost', title?: string | null, authorConnection?: { __typename?: 'PageSettingsYourHostAuthorConnection', edges?: Array<{ __typename?: 'PageSettingsYourHostAuthorEdge', node?: { __typename?: 'Author', title?: string | null, profile_imageConnection?: { __typename?: 'SysAssetConnection', edges?: Array<{ __typename?: 'SysAssetEdge', node?: { __typename?: 'SysAsset', url?: string | null, dimension?: { __typename?: 'SysAssetDimension', height?: number | null, width?: number | null } | null } | null } | null> | null } | null, biography?: { __typename?: 'AuthorBiography', json?: any | null } | null, social_links?: Array<{ __typename?: 'SocialLink', link?: string | null, iconConnection?: { __typename?: 'SysAssetConnection', edges?: Array<{ __typename?: 'SysAssetEdge', node?: { __typename?: 'SysAsset', url?: string | null, dimension?: { __typename?: 'SysAssetDimension', height?: number | null, width?: number | null } | null } | null } | null> | null } | null } | null> | null } | null } | null> | null } | null, call_to_action?: { __typename?: 'Link', title?: string | null, href?: string | null } | null } | null } | null> | null } | null };
+
+type LandingPageQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type LandingPageQueryQuery = { __typename?: 'Query', all_landing_page?: { __typename?: 'AllLandingPage', items?: Array<{ __typename?: 'LandingPage', hero_banner?: { __typename?: 'HeroBanner', eyebrow?: string | null, description?: string | null, title?: { __typename?: 'HeroBannerTitle', json?: any | null } | null, imageConnection?: { __typename?: 'SysAssetConnection', edges?: Array<{ __typename?: 'SysAssetEdge', node?: { __typename?: 'SysAsset', url?: string | null, description?: string | null, dimension?: { __typename?: 'SysAssetDimension', width?: number | null, height?: number | null } | null } | null } | null> | null } | null } | null, topics_carousel?: { __typename?: 'LandingPageTopicsCarousel', title?: string | null, cta_label?: string | null, topicsConnection?: { __typename?: 'LandingPageTopicsCarouselTopicsConnection', edges?: Array<{ __typename?: 'LandingPageTopicsCarouselTopicsEdge', node?: { __typename?: 'BlogTopic', title?: string | null, iconConnection?: { __typename?: 'SysAssetConnection', edges?: Array<{ __typename?: 'SysAssetEdge', node?: { __typename?: 'SysAsset', url?: string | null, dimension?: { __typename?: 'SysAssetDimension', width?: number | null, height?: number | null } | null } | null } | null> | null } | null } | null } | null> | null } | null } | null, featured_postConnection?: { __typename?: 'LandingPageFeaturedPostConnection', edges?: Array<{ __typename?: 'LandingPageFeaturedPostEdge', node?: { __typename?: 'BlogPost', title?: string | null, url?: string | null, published_date?: any | null, summary?: string | null, authorConnection?: { __typename?: 'BlogPostAuthorConnection', edges?: Array<{ __typename?: 'BlogPostAuthorEdge', node?: { __typename?: 'Author', title?: string | null, profile_imageConnection?: { __typename?: 'SysAssetConnection', edges?: Array<{ __typename?: 'SysAssetEdge', node?: { __typename?: 'SysAsset', url?: string | null, dimension?: { __typename?: 'SysAssetDimension', height?: number | null, width?: number | null } | null } | null } | null> | null } | null } | null } | null> | null } | null } | null } | null> | null } | null } | null> | null } | null };

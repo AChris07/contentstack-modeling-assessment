@@ -21,7 +21,7 @@ export function YourHost({ data }: YourHostProps) {
   return (
     <div className="flex lg:flex-col gap-x-3 items-center bg-white rounded-[20px] p-3 lg:p-4">
       <Image
-        className="border-9 border-highlight-color rounded-full max-w-[95px] max-h-[95px] lg:max-w-[140px] lg:max-h-[140px] lg:mb-4"
+        className="border-9 border-highlight-color rounded-full size-[95px] lg:size-[140px] lg:size-[140px] lg:mb-4"
         src={authorImage?.url ?? ""}
         alt={authorImage?.description ?? ""}
         width={authorImage?.dimension?.width ?? 0}

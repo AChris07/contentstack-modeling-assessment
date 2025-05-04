@@ -1,5 +1,16 @@
 import { gql } from "@apollo/client";
 
+const imageFragment = gql`
+  fragment ImageFragment on SysAsset {
+    url
+    description
+    dimension {
+      width
+      height
+    }
+  }
+`;
+
 export const headerQuery = gql`
   query HeaderQuery {
     all_header(limit: 1) {
@@ -8,12 +19,7 @@ export const headerQuery = gql`
           logo_imageConnection {
             edges {
               node {
-                url
-                description
-                dimension {
-                  width
-                  height
-                }
+                ...ImageFragment
               }
             }
           }
@@ -38,6 +44,8 @@ export const headerQuery = gql`
       }
     }
   }
+
+  ${imageFragment}
 `;
 
 export const pageSettingsQuery = gql`
@@ -54,11 +62,7 @@ export const pageSettingsQuery = gql`
                   profile_imageConnection {
                     edges {
                       node {
-                        url
-                        dimension {
-                          height
-                          width
-                        }
+                        ...ImageFragment
                       }
                     }
                   }
@@ -69,11 +73,7 @@ export const pageSettingsQuery = gql`
                     iconConnection {
                       edges {
                         node {
-                          url
-                          dimension {
-                            height
-                            width
-                          }
+                          ...ImageFragment
                         }
                       }
                     }
@@ -91,6 +91,8 @@ export const pageSettingsQuery = gql`
       }
     }
   }
+
+  ${imageFragment}
 `;
 
 export const landingPageQuery = gql`
@@ -106,12 +108,7 @@ export const landingPageQuery = gql`
           imageConnection {
             edges {
               node {
-                url
-                description
-                dimension {
-                  width
-                  height
-                }
+                ...ImageFragment
               }
             }
           }
@@ -126,11 +123,7 @@ export const landingPageQuery = gql`
                   iconConnection {
                     edges {
                       node {
-                        url
-                        dimension {
-                          width
-                          height
-                        }
+                        ...ImageFragment
                       }
                     }
                   }
@@ -140,7 +133,58 @@ export const landingPageQuery = gql`
           }
           cta_label
         }
+        featured_postConnection {
+          edges {
+            node {
+              ... on BlogPost {
+                title
+                url
+                imageConnection {
+                  edges {
+                    node {
+                      ... on SysAsset {
+                        ...ImageFragment
+                      }
+                    }
+                  }
+                }
+                categoryConnection {
+                  edges {
+                    node {
+                      ... on BlogTopic {
+                        title
+                      }
+                      ... on BlogCategory {
+                        title
+                      }
+                    }
+                  }
+                }
+                authorConnection {
+                  edges {
+                    node {
+                      ... on Author {
+                        title
+                        profile_imageConnection {
+                          edges {
+                            node {
+                              ...ImageFragment
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                published_date
+                summary
+              }
+            }
+          }
+        }
       }
     }
   }
+
+  ${imageFragment}
 `;
