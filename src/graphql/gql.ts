@@ -88,6 +88,13 @@ export const pageSettingsQuery = gql`
             href
           }
         }
+        newsletter {
+          title
+          subtitle
+          email_placeholder
+          cta_label
+          description
+        }
       }
     }
   }

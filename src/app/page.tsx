@@ -2,6 +2,7 @@ import { BlogCard } from "@/components/blog-card";
 import { HeroBanner } from "@/components/hero-banner";
 import { TopicsCarousel } from "@/components/topics-carousel";
 import { YourHost } from "@/components/your-host";
+import { Newsletter } from "@/components/newsletter";
 import { pageSettingsQuery, landingPageQuery } from "@/graphql/gql";
 import { getClient } from "@/services/contentstack";
 
@@ -37,9 +38,12 @@ export default async function LandingPage() {
             <BlogCard data={featuredPost} variant="vertical" isFeatured />
           )}
         </div>
-        <div className="col-span-full lg:col-span-3 order-1 lg:order-2">
+        <div className="col-span-full lg:col-span-3 order-1 lg:order-2 flex flex-col gap-y-3.75">
           {pageSettings?.your_host && (
             <YourHost data={pageSettings?.your_host} />
+          )}
+          {pageSettings?.newsletter && (
+            <Newsletter data={pageSettings?.newsletter} />
           )}
         </div>
       </div>
