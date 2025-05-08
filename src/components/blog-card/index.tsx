@@ -32,7 +32,12 @@ export function BlogCard({
         className
       )}
     >
-      <section className="relative aspect-8/3">
+      <section
+        className={clsx("relative w-full", {
+          "aspect-8/3": variant === "vertical",
+          "aspect-square": variant === "horizontal",
+        })}
+      >
         <Image
           className="rounded-3xl object-cover"
           src={image?.url ?? ""}

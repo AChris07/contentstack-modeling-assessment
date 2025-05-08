@@ -11,6 +11,55 @@ const imageFragment = gql`
   }
 `;
 
+const blogCardFragment = gql`
+  fragment BlogCardFragment on BlogPost {
+    system {
+      uid
+    }
+    title
+    url
+    imageConnection {
+      edges {
+        node {
+          ... on SysAsset {
+            ...ImageFragment
+          }
+        }
+      }
+    }
+    categoryConnection {
+      edges {
+        node {
+          ... on BlogTopic {
+            title
+          }
+          ... on BlogCategory {
+            title
+          }
+        }
+      }
+    }
+    authorConnection {
+      edges {
+        node {
+          ... on Author {
+            title
+            profile_imageConnection {
+              edges {
+                node {
+                  ...ImageFragment
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    published_date
+    summary
+  }
+`;
+
 export const headerQuery = gql`
   query HeaderQuery {
     all_header(limit: 1) {
@@ -143,55 +192,20 @@ export const landingPageQuery = gql`
         featured_postConnection {
           edges {
             node {
-              ... on BlogPost {
-                title
-                url
-                imageConnection {
-                  edges {
-                    node {
-                      ... on SysAsset {
-                        ...ImageFragment
-                      }
-                    }
-                  }
-                }
-                categoryConnection {
-                  edges {
-                    node {
-                      ... on BlogTopic {
-                        title
-                      }
-                      ... on BlogCategory {
-                        title
-                      }
-                    }
-                  }
-                }
-                authorConnection {
-                  edges {
-                    node {
-                      ... on Author {
-                        title
-                        profile_imageConnection {
-                          edges {
-                            node {
-                              ...ImageFragment
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                published_date
-                summary
-              }
+              ...BlogCardFragment
             }
           }
         }
       }
     }
+
+    all_blog_post(where: { trending: true }, order_by: created_at_DESC) {
+      items {
+        ...BlogCardFragment
+      }
+    }
   }
 
   ${imageFragment}
+  ${blogCardFragment}
 `;
