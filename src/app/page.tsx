@@ -4,6 +4,7 @@ import { HeroBanner } from "@/components/hero-banner";
 import { TopicsCarousel } from "@/components/topics-carousel";
 import { YourHost } from "@/components/your-host";
 import { Newsletter } from "@/components/newsletter";
+import { TopRated } from "@/components/top-rated";
 import { pageSettingsQuery, landingPageQuery } from "@/graphql/gql";
 import { getClient } from "@/services/contentstack";
 
@@ -67,6 +68,9 @@ export default async function LandingPage() {
           )}
           {pageSettings?.newsletter && (
             <Newsletter data={pageSettings?.newsletter} />
+          )}
+          {pageSettings?.top_rated && (
+            <TopRated data={pageSettings?.top_rated} />
           )}
         </div>
       </div>

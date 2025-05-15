@@ -144,11 +144,22 @@ export const pageSettingsQuery = gql`
           cta_label
           description
         }
+        top_rated {
+          title
+          postsConnection {
+            edges {
+              node {
+                ...BlogCardFragment
+              }
+            }
+          }
+        }
       }
     }
   }
 
   ${imageFragment}
+  ${blogCardFragment}
 `;
 
 export const landingPageQuery = gql`
