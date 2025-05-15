@@ -9,6 +9,11 @@ export function HeroBanner({ data }: HeroBannerProps) {
   const image = data?.imageConnection?.edges?.[0]?.node;
 
   const parsedTitle = jsonToHtml(data?.title?.json, {
+    customElementTypes: {
+      p: (_attrs, child) => {
+        return `<p${_attrs}>${child}</p>`;
+      },
+    },
     customTextWrapper: {
       bold: (child) => {
         return `<strong class="bg-linear-to-r from-highlight-color to-indigo-400 text-transparent bg-clip-text">${child}</strong>`;
