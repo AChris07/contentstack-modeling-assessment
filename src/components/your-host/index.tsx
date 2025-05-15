@@ -1,6 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
 import { jsonToHtml } from "@contentstack/json-rte-serializer";
-import { parse } from "path";
 
 export interface YourHostProps {
   data: PageSettingsYourHost;
@@ -38,12 +38,12 @@ export function YourHost({ data }: YourHostProps) {
           className="text-main-color max-lg:hidden lg:mb-5"
           dangerouslySetInnerHTML={{ __html: parsedBiography }}
         />
-        <a
+        <Link
           href={data.call_to_action?.href ?? ""}
           className="font-primary font-bold text-main-color text-xs/2.25 text-center bg-highlight-color rounded-[40px] px-7 py-1 lg:mb-4 max-lg:w-full"
         >
           {data.call_to_action?.title}
-        </a>
+        </Link>
         <div className="flex gap-x-2 max-lg:hidden">
           {author?.social_links?.map((socialLink, index) => {
             const icon = socialLink?.iconConnection?.edges?.[0]?.node;

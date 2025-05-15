@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import AdvancedFormat from "dayjs/plugin/advancedFormat";
@@ -83,7 +84,7 @@ export function BlogCard({
         <p className="font-primary font-normal text-sm/2.5 lg:text-base/3 text-gray-700 mb-2.25 lg:mb-5">
           {data.summary}
         </p>
-        <a
+        <Link
           href={data.url ?? ""}
           className={clsx(
             "font-primary font-bold text-xs/2.25 text-highlight-color tracking-widest uppercase",
@@ -92,7 +93,7 @@ export function BlogCard({
         >
           <ArrowRightIcon className="size-3" />
           Read more
-        </a>
+        </Link>
       </section>
     </div>
   );

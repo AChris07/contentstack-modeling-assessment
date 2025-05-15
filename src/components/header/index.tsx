@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 export interface HeaderProps {
@@ -13,7 +14,7 @@ export function Header({ data }: HeaderProps) {
 
   return (
     <header className="flex items-center justify-between px-3 py-2 lg:px-10.5 lg:pt-4.5 lg:pb-6">
-      <a href={data.logo?.logo_link ?? undefined}>
+      <Link href={data.logo?.logo_link ?? ""}>
         <Image
           className="max-h-[32px] lg:max-h-[48px] w-fit object-contain"
           src={logo?.url || ""}
@@ -21,26 +22,26 @@ export function Header({ data }: HeaderProps) {
           width={logo?.dimension?.width || 0}
           height={logo?.dimension?.height || 0}
         />
-      </a>
+      </Link>
       <ul className="flex items-center justify-center shrink-0 gap-4 xl:gap-8 max-lg:hidden">
         {navigationItems?.map((navItem, idx) => (
           <li key={idx}>
-            <a
+            <Link
               className="font-primary font-bold text-main-color text-xs lg:text-sm leading-none"
               href={navItem?.url ?? ""}
             >
               {navItem?.title}
-            </a>
+            </Link>
           </li>
         ))}
         {data?.call_to_action?.href ? (
           <li>
-            <a
+            <Link
               className="font-primary font-bold text-main-color text-xs lg:text-sm leading-none bg-highlight-color rounded-[40px] px-2 py-0.5 lg:px-4 lg:py-1"
               href={data?.call_to_action?.href}
             >
               {data?.call_to_action?.title}
-            </a>
+            </Link>
           </li>
         ) : undefined}
         <li>
