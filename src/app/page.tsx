@@ -5,6 +5,7 @@ import { TopicsCarousel } from "@/components/topics-carousel";
 import { YourHost } from "@/components/your-host";
 import { Newsletter } from "@/components/newsletter";
 import { TopRated } from "@/components/top-rated";
+import { CategoryList } from "@/components/category-list";
 import { pageSettingsQuery, landingPageQuery } from "@/graphql/gql";
 import { getClient } from "@/services/contentstack";
 
@@ -71,6 +72,9 @@ export default async function LandingPage() {
           )}
           {pageSettings?.top_rated && (
             <TopRated data={pageSettings?.top_rated} />
+          )}
+          {pageSettings?.category_list && (
+            <CategoryList data={pageSettings?.category_list} />
           )}
         </div>
       </div>

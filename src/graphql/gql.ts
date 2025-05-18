@@ -154,6 +154,22 @@ export const pageSettingsQuery = gql`
             }
           }
         }
+        category_list {
+          title
+          categoriesConnection {
+            edges {
+              node {
+                ... on BlogCategory {
+                  system {
+                    uid
+                  }
+                  title
+                  url
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
