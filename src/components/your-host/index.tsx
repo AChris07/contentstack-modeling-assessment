@@ -19,7 +19,7 @@ export function YourHost({ data }: YourHostProps) {
   });
 
   return (
-    <div className="flex lg:flex-col gap-x-3 items-center bg-white rounded-[20px] p-3 lg:p-4">
+    <div className="flex lg:flex-col gap-x-3 items-center bg-white shadow-md rounded-[20px] p-3 lg:p-4">
       <Image
         className="border-9 border-highlight-color rounded-full size-[95px] lg:size-[140px] lg:size-[140px] lg:mb-4"
         src={authorImage?.url ?? ""}

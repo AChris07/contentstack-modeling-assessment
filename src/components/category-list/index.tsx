@@ -28,7 +28,7 @@ export async function CategoryList({ data }: CategoryListProps) {
   );
 
   return (
-    <div className="bg-white rounded-[20px] py-5 px-3 max-lg:hidden">
+    <div className="bg-white rounded-[20px] py-5 px-3 shadow-md max-lg:hidden">
       <h2 className="font-primary font-bold text-2xl/4 text-primary-color pb-[28px] border-b-1 border-secondary-color">
         Categories
       </h2>

@@ -6,7 +6,7 @@ export interface NewsletterProps {
 
 export function Newsletter({ data }: NewsletterProps) {
   return (
-    <div className="flex flex-col gap-x-3 lg:items-center justify-center bg-white rounded-[20px] p-3 lg:p-4">
+    <div className="flex flex-col gap-x-3 lg:items-center justify-center bg-white shadow-md rounded-[20px] p-3 lg:p-4">
       <h3
         className={clsx(
           "font-primary font-bold text-[32px] lg:text-2xl leading-[36px] text-main-color",
