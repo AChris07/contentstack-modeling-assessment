@@ -97,6 +97,39 @@ export const headerQuery = gql`
   ${imageFragment}
 `;
 
+export const footerQuery = gql`
+  query FooterQuery {
+    all_footer(limit: 1) {
+      items {
+        logo {
+          logo_imageConnection {
+            edges {
+              node {
+                ...ImageFragment
+              }
+            }
+          }
+          logo_link
+        }
+        subtitle
+        social_links {
+          iconConnection {
+            edges {
+              node {
+                ...ImageFragment
+              }
+            }
+          }
+          link
+        }
+        copyright
+      }
+    }
+  }
+
+  ${imageFragment}
+`;
+
 export const pageSettingsQuery = gql`
   query PageSettingsQuery {
     all_page_settings(limit: 1) {

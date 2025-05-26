@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Header } from "@/components/header";
-import { headerQuery } from "@/graphql/gql";
+import { Footer } from "@/components/footer";
+import { headerQuery, footerQuery } from "@/graphql/gql";
 import { getClient } from "@/services/contentstack";
 import "./globals.css";
 
@@ -23,16 +24,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { data } = await getClient().query({
-    query: headerQuery,
-  });
-  const headerData = data.all_header.items[0] as Maybe<Header>;
+  const [headerItemsData, footerItemsData] = (
+    await Promise.all([
+      getClient().query({
+        query: headerQuery,
+      }),
+      getClient().query({
+        query: footerQuery,
+      }),
+    ])
+  ).map((res) => res.data);
+  const headerData = headerItemsData.all_header.items[0] as Maybe<Header>;
+  const footerData = footerItemsData.all_footer.items[0] as Maybe<Footer>;
 
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
         {headerData && <Header data={headerData} />}
         {children}
+        {footerData && <Footer data={footerData} />}
       </body>
     </html>
   );
