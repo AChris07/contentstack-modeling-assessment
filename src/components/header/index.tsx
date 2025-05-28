@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
+import { HeaderNavigation } from "./navigation.client";
+
 export interface HeaderProps {
   data: Header;
 }
@@ -10,7 +12,7 @@ export function Header({ data }: HeaderProps) {
   const logo = data.logo?.logo_imageConnection?.edges?.[0]?.node;
   const navigationItems = data.navigation_list
     ?.map((listItem) => listItem?.navigation_itemConnection?.edges?.[0]?.node)
-    .filter(Boolean);
+    .filter((listItem) => !!listItem);
 
   return (
     <header className="flex items-center justify-between px-3 py-2 lg:px-10.5 lg:pt-4.5 lg:pb-6">
@@ -24,16 +26,7 @@ export function Header({ data }: HeaderProps) {
         />
       </Link>
       <ul className="flex items-center justify-center shrink-0 gap-4 xl:gap-8 max-lg:hidden">
-        {navigationItems?.map((navItem, idx) => (
-          <li key={idx}>
-            <Link
-              className="font-primary font-bold text-main-color text-xs lg:text-sm leading-none"
-              href={navItem?.url ?? ""}
-            >
-              {navItem?.title}
-            </Link>
-          </li>
-        ))}
+        {navigationItems && <HeaderNavigation items={navigationItems} />}
         {data?.call_to_action?.href ? (
           <li>
             <Link
