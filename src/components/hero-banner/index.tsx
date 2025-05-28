@@ -1,11 +1,13 @@
 import Image from "next/image";
+import clsx from "clsx";
 import { jsonToHtml } from "@contentstack/json-rte-serializer";
 
 export interface HeroBannerProps {
   data: HeroBanner;
+  topics?: number;
 }
 
-export function HeroBanner({ data }: HeroBannerProps) {
+export function HeroBanner({ data, topics }: HeroBannerProps) {
   const image = data?.imageConnection?.edges?.[0]?.node;
 
   const parsedTitle = jsonToHtml(data?.title?.json, {
@@ -47,6 +49,22 @@ export function HeroBanner({ data }: HeroBannerProps) {
           </p>
         ) : undefined}
       </div>
+      {topics ? (
+        <div
+          className={clsx(
+            "rounded-[40px] bg-white py-0.5 px-1 pl-3",
+            "absolute bottom-[82px] max-lg:left-[50%] max-lg:-translate-1/2 lg:bottom-[42px] lg:right-[24px] w-[224px]",
+            "flex items-center justify-between"
+          )}
+        >
+          <span className="font-primary font-bold text-base/3 text-primary-color uppercase">
+            Topics
+          </span>
+          <span className="flex items-center justify-center rounded-full bg-highlight-color font-primary font-bold text-2xl leading-none w-5.5 h-5.5">
+            {topics}
+          </span>
+        </div>
+      ) : undefined}
     </div>
   );
 }

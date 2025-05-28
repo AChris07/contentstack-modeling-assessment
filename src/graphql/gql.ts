@@ -60,6 +60,23 @@ const blogCardFragment = gql`
   }
 `;
 
+export const heroBannerFragment = gql`
+  fragment HeroBannerFragment on HeroBanner {
+    eyebrow
+    title {
+      json
+    }
+    description
+    imageConnection {
+      edges {
+        node {
+          ...ImageFragment
+        }
+      }
+    }
+  }
+`;
+
 export const headerQuery = gql`
   query HeaderQuery {
     all_header(limit: 1) {
@@ -216,18 +233,7 @@ export const landingPageQuery = gql`
     all_landing_page(limit: 1) {
       items {
         hero_banner {
-          eyebrow
-          title {
-            json
-          }
-          description
-          imageConnection {
-            edges {
-              node {
-                ...ImageFragment
-              }
-            }
-          }
+          ...HeroBannerFragment
         }
         topics_carousel {
           title
@@ -267,5 +273,40 @@ export const landingPageQuery = gql`
   }
 
   ${imageFragment}
+  ${heroBannerFragment}
+  ${blogCardFragment}
+`;
+
+export const blogCategoryQuery = gql`
+  query BlogCategoryQuery($url: String!) {
+    all_blog_category(limit: 1, where: { url: $url }) {
+      total
+      items {
+        title
+        hero_banner {
+          ...HeroBannerFragment
+        }
+      }
+    }
+
+    total_posts: all_blog_post(
+      where: { category: { blog_category: { url: $url } } }
+    ) {
+      total
+    }
+
+    all_blog_post(
+      where: { category: { blog_category: { url: $url } } }
+      limit: 6
+      order_by: created_at_DESC
+    ) {
+      items {
+        ...BlogCardFragment
+      }
+    }
+  }
+
+  ${imageFragment}
+  ${heroBannerFragment}
   ${blogCardFragment}
 `;
