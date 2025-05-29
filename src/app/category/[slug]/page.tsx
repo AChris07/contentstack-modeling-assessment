@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { BlogCard } from "@/components/blog-card";
 import { HeroBanner } from "@/components/hero-banner";
-import { TopicsCarousel } from "@/components/topics-carousel";
 import { YourHost } from "@/components/your-host";
 import { Newsletter } from "@/components/newsletter";
 import { TopRated } from "@/components/top-rated";
@@ -10,7 +9,7 @@ import { pageSettingsQuery, blogCategoryQuery } from "@/graphql/gql";
 import { getClient } from "@/services/contentstack";
 
 export interface CategoryPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
